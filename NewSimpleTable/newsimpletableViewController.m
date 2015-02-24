@@ -52,6 +52,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"cell";
     locatorCell = (newsimpleTableViewCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    
+    
+    /*
     if (locatorCell == nil) {
     locatorCell = [[newsimpleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
@@ -69,7 +73,19 @@
     [button setTitle:@"Press me po!" forState:UIControlStateNormal];
     button.frame = CGRectMake(150.0f, 5.0f, 150.0f, 30.0f);
     button.tag = indexPath.row;
-    [locatorCell addSubview:button];
+    [locatorCell addSubview:button];*/
+    
+    
+    
+    //load your custom cell nib file. Para ung custom cell yung idisplay nung tableview.
+    if (locatorCell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"newsimpleTableViewCell" owner:self options:nil];
+        locatorCell = [nib objectAtIndex:0];
+    }
+    
+    //Gamitin property ng custom cell na namelabel. tpos dun iset ung value.
+    locatorCell.nameLabel.text = [NSString stringWithFormat:@"%@", arr [(long)indexPath.row]];
+    
     return locatorCell;
 }
 
@@ -97,4 +113,8 @@
     // e.g. self.myOutlet = nil;
 }
 
+//Set ung height ng cell. Dapat >= dun sa custom cell mo. or else standard height return nia regardless dun sa height ng custom cell mo.
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 78.0;
+}
 @end
